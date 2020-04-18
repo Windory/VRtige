@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MongoDB.Driver;
@@ -83,5 +83,5 @@ public class Therapeute : MonoBehaviour
         }
         return false;
     }
-}
+}*/
 
