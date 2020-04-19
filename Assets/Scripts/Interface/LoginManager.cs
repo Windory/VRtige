@@ -8,8 +8,12 @@ public class LoginManager : MonoBehaviour
     private Therapeute therapeute;
     private User user;
 
+    private string pseudo;
+    private bool patient; // true = patient, false = therapeute
+
     public GameObject loginScreen;
     public GameObject mainMenu;
+    public GameObject therapeuteMenu;
 
     public Text loginData;
     public Text pswData;
@@ -32,15 +36,24 @@ public class LoginManager : MonoBehaviour
 
         Login login;
         if (type.text == "Patient")
+        {
             login = user.login;
+            patient = true;
+        }
         else
+        {
             login = therapeute.login;
+            patient = false;
+        }
 
         if (login(id, pwd))
         {
             errorLabel.text = "";
             loginScreen.SetActive(false);
-            mainMenu.SetActive(true);
+            if (patient)
+                mainMenu.SetActive(true);
+            else
+                therapeuteMenu.SetActive(true);
         }
         else
         {

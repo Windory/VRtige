@@ -53,15 +53,18 @@ public class Therapeute : MonoBehaviour
             var collection = database.GetCollection<BsonDocument>("VR");
             var filter = Builders<BsonDocument>.Filter.Eq("nom", nom) & Builders<BsonDocument>.Filter.Eq("prenom", prenom) & Builders<BsonDocument>.Filter.Eq("N° de suivi", numsuiv);
             var result = collection.Find(filter).ToList();
+
+            if (result.Count == 0)
+                return false; // informations incorrectes
+
             foreach (var doc in result)
             {
-                Console.WriteLine(doc.ToJson());
+                Debug.Log(doc.ToJson());
             }
             return true;
         }
         catch (Exception e)
         {
-            Console.WriteLine("Informations incorrectes");
             return false;
         }
     }
