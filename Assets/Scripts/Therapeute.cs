@@ -1,8 +1,9 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using System;
 
 public class Therapeute : MonoBehaviour
 {
@@ -83,5 +84,4 @@ public class Therapeute : MonoBehaviour
         }
         return false;
     }
-}*/
-
+}
