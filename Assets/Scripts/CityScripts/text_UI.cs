@@ -38,7 +38,7 @@ namespace city
             }
             if (checkpoint.GetComponent<change_location>().checkpoint == 10)
             {
-                objectif = "Félicitation !";
+                objectif = "Félicitation ! \nTemps : " + this.GetComponent<city_stat>().temps.ToString() + " secondes";
                 cible1.GetComponent<cible>().triggered = 0;
             }
             sphere_UI.text = objectif;

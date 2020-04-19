@@ -10,6 +10,7 @@ public class trigger_see : MonoBehaviour
     public int targetCount = 0;
     public Text Congratulation;
     private GameObject[] numbertarget;
+    public bool trigger_end = false;
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class trigger_see : MonoBehaviour
         if (targetCount == numberOfTargets)
         {
             Congratulation.gameObject.SetActive(true);
+            trigger_end = true;
         }
 
     }
