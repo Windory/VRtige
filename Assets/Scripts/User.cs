@@ -1,21 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Text;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System;
 
 public class User : MonoBehaviour
 {
-    public GameObject loginScreen;
-    public GameObject mainMenu;
-
-    public Text loginData;
-    public Text pswData;
-    public Text errorLabel;
-
     public bool login(string id, string pwd)
     {
         var client = new MongoClient("mongodb+srv://alou:ffpkWFqu5GHuWgo6@vrclust-tlgid.mongodb.net/vrtige?retryWrites=true&w=majority");
@@ -30,20 +21,32 @@ public class User : MonoBehaviour
         return false;
     }
 
-    public void SendLogin()
+    public bool create_profile(string nom, string prenom, string pseudo, string pwd, string numsuiv, string therapeute)
     {
-        string id = loginData.text;
-        string pwd = pswData.text;
-
-        if (login(id, pwd))
+        try
         {
-            errorLabel.text = "";
-            loginScreen.SetActive(false);
-            mainMenu.SetActive(true);
+            var client = new MongoClient("mongodb+srv://alou:ffpkWFqu5GHuWgo6@vrclust-tlgid.mongodb.net/vrtige?retryWrites=true&w=majority");
+            var database = client.GetDatabase("VRTIGE");
+            var collection = database.GetCollection<BsonDocument>("VR");
+            var document = new BsonDocument
+            {
+                {"nom", nom },
+                {"prenom", prenom },
+                {"nom utilisateur", pseudo },
+                {"pwd", pwd },
+                {"N° de suivi", numsuiv },
+                {"Thérapeute", therapeute }
+            };
+            collection.InsertOne(document);
+            return true;
         }
-        else
+        catch (Exception e)
         {
-            errorLabel.text = "Erreur : identifiants incorrects";
+            return false;
         }
+    }
+    public bool create_profile_light(string nom, string prenom, string pseudo, string pwd)
+    {
+        return create_profile(nom, prenom, pseudo, pwd, "", "null");
     }
 }

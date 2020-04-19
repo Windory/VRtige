@@ -7,6 +7,20 @@ using System;
 
 public class Therapeute : MonoBehaviour
 {
+    public bool login(string id, string pwd)
+    {
+        var client = new MongoClient("mongodb+srv://alou:ffpkWFqu5GHuWgo6@vrclust-tlgid.mongodb.net/vrtige?retryWrites=true&w=majority");
+        var database = client.GetDatabase("VRTIGE");
+        var collection = database.GetCollection<BsonDocument>("Therapeutes");
+        var filter = Builders<BsonDocument>.Filter.Eq("nom utilisateur", id) & Builders<BsonDocument>.Filter.Eq("pwd", pwd);
+        var result = collection.Find(filter).ToList();
+        if (result.Count != 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public bool create_profile(string nom, string prenom, string pseudo, string pwd)
     {
         try
@@ -29,6 +43,7 @@ public class Therapeute : MonoBehaviour
             return false;
         }
     }
+
     public bool consulter_stats(string nom, string prenom, string numsuiv) // le thérapeute consulte les infos d'un patient en saisissant des infos
     {
         try
@@ -70,18 +85,5 @@ public class Therapeute : MonoBehaviour
             Console.WriteLine("La mise à jour des données a échoué");
             return false;
         }
-    }
-    public bool login(String id, String pwd)
-    {
-        var client = new MongoClient("mongodb+srv://alou:ffpkWFqu5GHuWgo6@vrclust-tlgid.mongodb.net/vrtige?retryWrites=true&w=majority");
-        var database = client.GetDatabase("VRTIGE");
-        var collection = database.GetCollection<BsonDocument>("Therapeutes");
-        var filter = Builders<BsonDocument>.Filter.Eq("nom utilisateur", id) & Builders<BsonDocument>.Filter.Eq("pwd", pwd);
-        var result = collection.Find(filter).ToList();
-        if (result.Count != 0)
-        {
-            return true;
-        }
-        return false;
     }
 }

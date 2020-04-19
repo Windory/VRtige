@@ -26,7 +26,7 @@ public class LevelInfos : MonoBehaviour
         }
         else if (lvlIndex == 2)
         {
-            objectif.text = "";
+            objectif.text = "Grimpez au sommet de la montagne et regardez les sphères en contre-bas";
             description.text = "Une montagne enneigée";
         }
     }
