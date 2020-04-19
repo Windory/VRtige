@@ -7,6 +7,8 @@ using System;
 
 public class User : MonoBehaviour
 {
+    private string pseudo = "";
+
     public bool login(string id, string pwd)
     {
         var client = new MongoClient("mongodb+srv://alou:ffpkWFqu5GHuWgo6@vrclust-tlgid.mongodb.net/vrtige?retryWrites=true&w=majority");
@@ -16,6 +18,7 @@ public class User : MonoBehaviour
         var result = collection.Find(filter).ToList();
         if (result.Count != 0)
         {
+            pseudo = id;
             return true;
         }
         return false;
@@ -45,8 +48,34 @@ public class User : MonoBehaviour
             return false;
         }
     }
+
     public bool create_profile_light(string nom, string prenom, string pseudo, string pwd)
     {
         return create_profile(nom, prenom, pseudo, pwd, "", "null");
+    }
+
+    public BsonDocument consulter_stats()
+    {
+        try
+        {
+            var client = new MongoClient("mongodb+srv://alou:ffpkWFqu5GHuWgo6@vrclust-tlgid.mongodb.net/vrtige?retryWrites=true&w=majority");
+            var database = client.GetDatabase("VRTIGE");
+            var collection = database.GetCollection<BsonDocument>("VR");
+            var filter = Builders<BsonDocument>.Filter.Eq("nom utilisateur", pseudo);
+            var result = collection.Find(filter).ToList();
+
+            if (result.Count == 0)
+                return null; // informations incorrectes
+
+            foreach (var doc in result)
+            {
+                Debug.Log(doc.GetElement(0));
+            }
+            return result[0];
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }

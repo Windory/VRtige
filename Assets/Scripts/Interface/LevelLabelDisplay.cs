@@ -11,6 +11,6 @@ public class LevelLabelDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        labelText.text = "Niveau " + lvl;
+        labelText.text = "Description";
     }
 }

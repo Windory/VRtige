@@ -44,7 +44,7 @@ public class Therapeute : MonoBehaviour
         }
     }
 
-    public bool consulter_stats(string nom, string prenom, string numsuiv) // le thérapeute consulte les infos d'un patient en saisissant des infos
+    public BsonDocument consulter_stats(string nom, string prenom, string numsuiv) // le thérapeute consulte les infos d'un patient en saisissant des infos
     {
         try
         {
@@ -55,17 +55,17 @@ public class Therapeute : MonoBehaviour
             var result = collection.Find(filter).ToList();
 
             if (result.Count == 0)
-                return false; // informations incorrectes
+                return null; // informations incorrectes
 
             foreach (var doc in result)
             {
-                Debug.Log(doc.ToJson());
+                Debug.Log(doc.GetElement(0));
             }
-            return true;
+            return result[0];
         }
         catch (Exception e)
         {
-            return false;
+            return null;
         }
     }
 
